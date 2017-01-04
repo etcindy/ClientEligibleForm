@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular Sort and Filter</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+    </style>
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="src/app.js"></script>
+
+</head>
+<body>
+    <div class="container" ng-app="sortApp" ng-controller="mainController">
+
+        <div class="alert alert-info">
+            <p>Direct Lending Refinancing Eligibility Customers</p>
+            <!--<p>Sort Type: {{ sortType }}</p>
+            <p>Sort Reverse: {{ sortReverse }}</p>
+            <p>Search Query: {{ searchClient }}</p>-->
+        </div>
+
+
+
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                    <input type="text" class="form-control" placeholder="Search Client" ng-model="searchClient">
+                </div>
+            </div>
+        </form>
+
+
+        <table class="table table-bordered table-striped">
+
+            <thead>
+            <tr>
+                <td>
+                    <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                        Borrower Name
+                        <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="#" ng-click="sortType = 'address'; sortReverse = !sortReverse">
+                        Borrower Address
+                        <span ng-show="sortType == 'address' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'address' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="#" ng-click="sortType = 'phone'; sortReverse = !sortReverse">
+                        Borrower Phone Number
+                        <span ng-show="sortType == 'phone' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'phone' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="#" ng-click="sortType = 'loanumber'; sortReverse = !sortReverse">
+                        Stonegate Loan Number
+                        <span ng-show="sortType == 'loanumber' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'loanumber' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </td>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="client in clients | orderby:sortType:sortReverse | filter:searchClient">
+                <td>{{ client.name }}</td>
+                <td>{{ client.address }}</td>
+                <td>{{ client.phone}}</td>
+                <td>{{ client.loanumber }}</td>
+            </tr>
+            </tbody>
+
+        </table>
+        
+        <p class="text-center text-muted">
+            <a href="#" target="_blank">Refinance Eligibility Customers</a>
+        </p>
+
+        <p class="text-center">
+            by <a href="http://scotch.io" target="_blank">Stonegate Mtg</a>
+        </p>
+
+    </div>
+</body>
+</html>
