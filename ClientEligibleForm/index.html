@@ -22,7 +22,6 @@
 <div class="container" ng-app="sortApp" ng-controller="mainController">
     <div class="alert alert-info">
         <h3 class="text-muted">Refinance Eligibility Customer Search</h3>
-           
     </div>
 
     <form name="refiEligibleForm">
@@ -30,12 +29,11 @@
             <div class="input-group">
                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
                 <input type="text" class="form-control" placeholder="Search Client" ng-model="search"/>
-                </div>
+            </div>
         </div>
     </form>
-
+    
     <table class="table table-bordered table-striped">
-
         <thead>
         <tr>
             <td>
@@ -86,7 +84,7 @@
                         <a ng-if="roll.eligible == 'Non Eligible'">{{roll.loan_numb}}</a>
                     </td>
                     <td>{{roll.eligible}}</td>
-                </tr>>
+                </tr>
             </tbody>
      </table>
     
@@ -102,15 +100,13 @@
             </div>
         </div>
     </div>
-    
         <p class="text-center text-muted">
             <a href="#" target="_blank">Refinance Eligibility Form</a>
         </p>
-
         <p class="text-center">
             by <a href="http://scotch.io" target="_blank">Stonegate Mtg Inc</a>
         </p>
-    
+
 </div>
 </body>
 </html>

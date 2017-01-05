@@ -7,10 +7,14 @@
 
     // create the list of sushi rolls 
     $scope.sushi = [
-      { name: "Carl Baynard", address: "4358 Burnside Avenue", phone: "317-287-8484", loan_numb: "1900892", eligible: "Eligible" },
+      { name: "Carl Baynard", address: "3339 Moller Avenue", phone: "317-287-8484", loan_numb: "1900892", eligible: "Eligible" },
       { name: "Brian A Smith", address: "Po Box 552, Plains", phone: "317-555-3289", loan_numb: "1000490", eligible: "Non Eligible" },
-      { name: "Harry L Johnson", address: "66 Gay St, Plain City, OH", phone: "317-905-3889", loan_numb: "20078007", eligible: "Non Eligible" },
-      { name: "Cleve H Johnson", address: "374 Wilson Ave, Janesville", phone: "317-765-3189", loan_numb: "10050006", eligible: "Eligible" }
+      { name: "Harry L Johnson", address: "6678 Gaylord St, Cleveland, OH", phone: "317-905-3889", loan_numb: "20078007", eligible: "Non Eligible" },
+      { name: "Lyle H Alzado", address: "374 Wilson Ave, Janesville", phone: "317-765-3189", loan_numb: "10050006", eligible: "Eligible" },
+      { name: "Jeff Rodgers", address: "4358 Burnside Avenue", phone: "317-287-8484", loan_numb: "1900892", eligible: "Eligible" },
+      { name: "Sean A Johns", address: " 552 Wishire, Plains", phone: "317-555-3289", loan_numb: "8000490", eligible: "Eligible" },
+      { name: "Mary L Zeiking", address: "66 Gay St, Plain City, OH", phone: "317-905-3889", loan_numb: "30078007", eligible: "Eligible" },
+      { name: "John H Smith", address: "1245 Wilson Ave, Janesville", phone: "317-765-3189", loan_numb: "20050006", eligible: "Eligible" }
     ];
 
 
