@@ -1,42 +1,66 @@
-﻿angular.module("sortApp", [])
+﻿angular.module('clientapp', ['ClientService', 'CompanyService', 'CoBorrowerService','ui.bootstrap'])
 
-.controller("mainController", function ($scope) {
-    $scope.sortType = "name"; // set the default sort type
-    $scope.sortReverse = false;  // set the default sort order
-    $scope.searchFish = '';     // set the default search/filter term
+.controller("mainController", function ($scope, clientApi, companyApi, coBorrowerApi, $http) {
 
-    // create the list of sushi rolls 
-    $scope.sushi = [
-      { name: "Carl Baynard", address: "3339 Moller Avenue", phone: "317-287-8484", loan_numb: "1900892", eligible: "Eligible" },
-      { name: "Brian A Smith", address: "Po Box 552, Plains", phone: "317-555-3289", loan_numb: "1000490", eligible: "Non Eligible" },
-      { name: "Harry L Johnson", address: "6678 Gaylord St, Cleveland, OH", phone: "317-905-3889", loan_numb: "20078007", eligible: "Non Eligible" },
-      { name: "Lyle H Alzado", address: "374 Wilson Ave, Janesville", phone: "317-765-3189", loan_numb: "10050006", eligible: "Eligible" },
-      { name: "Jeff Rodgers", address: "4358 Burnside Avenue", phone: "317-287-8484", loan_numb: "1900892", eligible: "Eligible" },
-      { name: "Sean A Johns", address: " 552 Wishire, Plains", phone: "317-555-3289", loan_numb: "8000490", eligible: "Eligible" },
-      { name: "Mary L Zeiking", address: "66 Gay St, Plain City, OH", phone: "317-905-3889", loan_numb: "30078007", eligible: "Eligible" },
-      { name: "John H Smith", address: "1245 Wilson Ave, Janesville", phone: "317-765-3189", loan_numb: "20050006", eligible: "Eligible" }
-    ];
+        getClients();
+            function getClients(){
+                clientApi.getClients().success(function (clients) {
+                    $scope.selected = undefined;
+                    $scope.clients = clients;
+                    //$scope.PrimaryBorrowerName = PrimaryBorrowerName;
+                    
+
+                    var x = 6; //or whatever offset
+                    var currentDate = new Date();
+                    currentDate.setMonth(currentDate.getMonth() - x);
+                    $scope.sixMonthAgo = currentDate;
+                
+                    })
+                    .error(function (error) {
+                        $scope.status = 'Unable to load Borrower Refi data: ' + error.message;
+                    });
+
+                    //var sixmonth = dateTime;
+                    //var sixmonth = now.getMonth()-6;
+                    //$scope.sixMonthAgo = new Date().setMonth(now.getMonth() - 6);
+            }
+
+        getCompanies();
+            function getCompanies() {
+                companyApi.getCompanies().success(function (companies) {
+                    $scope.companies = companies;
+            
+                })
+                    .error(function (error) {
+                        $scope.status = 'Unable to load Company data: ' + error.message;
+                    });
+            }
 
 
-    //$scope.search = 'Search Client';
-    $scope.IsVisible = false;
-    $scope.ShowHide = function() {
-        //if Div is visible it will be hidden and vice vesa.
-        $scope.IsVisible = $scope.IsVisible ? false : true;
-    }
+        getCoBorrowers();
+            function getCoBorrowers() {
+                coBorrowerApi.getCoBorrowers().success(function (borrowers) {
+                    $scope.borrowers = borrowers;
+            
+                })
+                    .error(function (error) {
+                        $scope.status = 'Unable to load CoBorrower data: ' + error.message;
+                    });
+            }
 
-    //$scope.getSearchResults = function (val) {
-    //    return dataContext.getSearchResults(val).then(function (data) {
-    //        if (data && data.results.length === 0) {
-    //            data.results.push({ lastName: '', firstName: '', loanNumber: 'No Results', NoResults: true });
-    //            return data.results;
-    //        } else {
-    //            angular.forEach(data.results, function (result) {
-    //                result.inlineCount = data.inlineCount;
-    //            });
-    //            return data.results;
-    //        }
-    //    });
-    //};
+            $scope.sort = function(keyname) {
+                $scope.sortType = "LoanID"; // set the default sort type
+                $scope.sortkey = keyname;  // set the sortkey to the param passed
+                $scope.reverse = !$scope.reverse;     // If true then make it false vice versa
+            }
+    
+            //$scope.search = 'Search Client';
+            $scope.IsVisible = false;
+            $scope.ShowHide = function() {
+                //if Div is visible it will be hidden and vice vesa.
+                $scope.IsVisible = $scope.IsVisible ? false : true;
+            }
 
-    });
+
+});
+
