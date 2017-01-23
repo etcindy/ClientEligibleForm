@@ -1,15 +1,15 @@
-﻿angular.module('clientapp', ['ClientService', 'CompanyService', 'CoBorrowerService','ui.bootstrap'])
+﻿angular.module('clientapp',['ClientService', 'CompanyService', 'CoBorrowerService', 'ui.bootstrap'])
 
 .controller("mainController", function ($scope, clientApi, companyApi, coBorrowerApi, $http) {
 
         getClients();
             function getClients(){
                 clientApi.getClients().success(function (clients) {
+
                     $scope.selected = undefined;
                     $scope.clients = clients;
-                    //$scope.PrimaryBorrowerName = PrimaryBorrowerName;
-                    
 
+                    //$scope.PrimaryBorrowerName = PrimaryBorrowerName;
                     var x = 6; //or whatever offset
                     var currentDate = new Date();
                     currentDate.setMonth(currentDate.getMonth() - x);
@@ -20,10 +20,7 @@
                         $scope.status = 'Unable to load Borrower Refi data: ' + error.message;
                     });
 
-                    //var sixmonth = dateTime;
-                    //var sixmonth = now.getMonth()-6;
-                    //$scope.sixMonthAgo = new Date().setMonth(now.getMonth() - 6);
-            }
+        }
 
         getCompanies();
             function getCompanies() {
@@ -55,6 +52,14 @@
             }
     
             //$scope.search = 'Search Client';
+            //$scope.search = function (row) {
+            //    return (angular.lowercase(row.lname).indexOf(angular.lowercase($scope.query) || '') !== -1 ||
+            //            angular.lowercase(row.address).indexOf(angular.lowercase($scope.query) || '') !== -1 ||
+            //            angular.lowercase(row.loanid).indexOf(angular.lowercase($scope.query) || '') !== -1);
+            //};
+
+
+
             $scope.IsVisible = false;
             $scope.ShowHide = function() {
                 //if Div is visible it will be hidden and vice vesa.

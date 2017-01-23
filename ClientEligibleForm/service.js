@@ -2,42 +2,42 @@
 
 var ClientService = angular.module('ClientService', []);
 
-ClientService.factory('clientApi', function($http) {
+        ClientService.factory('clientApi', function($http) {
 
-    var urlBase = "http://localhost:60061/api";
-    var clientApi = {};
-    clientApi.getClients = function() {
-        return $http.get(urlBase + '/ClientPrimary');
+            var urlBase = "http://localhost:60061/api";
+            var clientApi = {};
+            clientApi.getClients = function() {
+                return $http.get(urlBase + '/ClientPrimary/');
 
-    };
+            };
 
-    return clientApi;
-});
+            return clientApi;
+        });
 
 var CompanyService = angular.module('CompanyService', []);
 
-CompanyService.factory('companyApi', function ($http) {
+        CompanyService.factory('companyApi', function ($http) {
 
-    var urlBase = "http://localhost:60061/api";
-    var companyApi = {};
-    companyApi.getCompanies = function () {
-        return $http.get(urlBase + '/ClientCompanies');
+            var urlBase = "http://localhost:60061/api";
+            var companyApi = {};
+            companyApi.getCompanies = function () {
+                return $http.get(urlBase + '/ClientCompanies');
 
-    };
+            };
 
-    return companyApi;
-});
+            return companyApi;
+        });
 
 var CoBorrowerService = angular.module('CoBorrowerService', []);
 
-CoBorrowerService.factory('coBorrowerApi', function ($http) {
+        CoBorrowerService.factory('coBorrowerApi', function ($http) {
 
-    var urlBase = "http://localhost:60061/api";
-    var coBorrowerApi = {};
-    coBorrowerApi.getCoBorrowers = function () {
-        return $http.get(urlBase + '/ClientCoBorrower');
+            var urlBase = "http://localhost:60061/api";
+            var coBorrowerApi = {};
+            coBorrowerApi.getCoBorrowers = function () {
+                return $http.get(urlBase + '/ClientCoBorrower');
 
-    };
+            };
 
-    return coBorrowerApi;
-});
+            return coBorrowerApi;
+        });
