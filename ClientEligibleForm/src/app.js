@@ -2,6 +2,9 @@
 
 .controller("mainController", function ($scope, clientApi, companyApi, coBorrowerApi, $http) {
 
+    $scope.currentPage = 1;
+    $scope.limit = 10;
+
         getClients();
             function getClients(){
                 clientApi.getClients().success(function (clients) {
@@ -22,18 +25,6 @@
 
         }
 
-        getCompanies();
-            function getCompanies() {
-                companyApi.getCompanies().success(function (companies) {
-                    $scope.companies = companies;
-            
-                })
-                    .error(function (error) {
-                        $scope.status = 'Unable to load Company data: ' + error.message;
-                    });
-            }
-
-
         getCoBorrowers();
             function getCoBorrowers() {
                 coBorrowerApi.getCoBorrowers().success(function (borrowers) {
@@ -46,26 +37,24 @@
             }
 
             $scope.sort = function(keyname) {
-                $scope.sortType = "LoanID"; // set the default sort type
+                $scope.sortType = 'LoanID'; // set the default sort type
                 $scope.sortkey = keyname;  // set the sortkey to the param passed
                 $scope.reverse = !$scope.reverse;     // If true then make it false vice versa
             }
     
-            //$scope.search = 'Search Client';
-            //$scope.search = function (row) {
-            //    return (angular.lowercase(row.lname).indexOf(angular.lowercase($scope.query) || '') !== -1 ||
-            //            angular.lowercase(row.address).indexOf(angular.lowercase($scope.query) || '') !== -1 ||
-            //            angular.lowercase(row.loanid).indexOf(angular.lowercase($scope.query) || '') !== -1);
-            //};
-
-
+            
 
             $scope.IsVisible = false;
-            $scope.ShowHide = function() {
+            $scope.ShowHide = function(loanId) {
                 //if Div is visible it will be hidden and vice vesa.
                 $scope.IsVisible = $scope.IsVisible ? false : true;
+                if ($scope.IsVisible === true) {
+                    getCoBorrowers();
+                }
             }
 
+           
+                        
+                    
 
-});
-
+   });

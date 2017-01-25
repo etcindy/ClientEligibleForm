@@ -139,10 +139,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Companies.mdf" />
-    <Content Include="App_Data\Companies_log.ldf">
-      <DependentUpon>Companies.mdf</DependentUpon>
-    </Content>
     <Content Include="cdetail.html" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\ui-bootstrap-csp.css" />
@@ -233,6 +229,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>

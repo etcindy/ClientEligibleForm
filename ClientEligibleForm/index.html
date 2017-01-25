@@ -7,8 +7,9 @@
     <script src="service.js"></script>
     <script src="Scripts/dirPagination.js"></script>
     <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js">
-    </script><script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>-->
+    <!--<script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>-->
+    <script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
     <script src="src/app.js"></script>
     <title>Refinance Eligibility Customer Search</title>
 
@@ -31,7 +32,7 @@
         <div class="form-group">
             <div class="input-group">
                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                    <input type="text" class="form-control" placeholder="Search Client" ng-model="search" ng-model-options="{ debounce: 800 }"/>
+                <input type="text" class="form-control" placeholder="Search Client" ng-model="search" ng-model-options="{ debounce: 900 }"/>
             </div>
             <!--<div class="input-group">
                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
@@ -41,60 +42,65 @@
             </div>-->
             <!--<div>
                 <a>Company: {{selectedCompany.Company}} 
-                <p>If Borrowers previous Loan Company is selected then Borrowers Refinance Status is Not Eligible</p></a>
+                    <p>If Borrowers previous Loan Company is selected then Borrowers Refinance Status is Not Eligible</p></a>
             </div>-->
-         </div>
+        </div>
     </form>
     
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
             <td>
+                <a href="#" ng-click="sortkey = 'LoanID'">
+                    Stonegate Loan Number
+                    <span ng-show="sortkey == 'LoanID' && !reverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortkey == 'LoanID' && reverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+                
+            <td>
                 <a href="#" ng-click="sortkey = 'LastName'">
-                    Borrower Last Name
+                    Last Name
                     <span ng-show="sortkey == 'LastName' && !reverse" class="fa fa-caret-down"></span>
                     <span ng-show="sortkey == 'LastName' && reverse" class="fa fa-caret-up"></span>
                 </a>
             </td>
             <td>
                 <a href="#" ng-click="sortkey = 'Primary_Borrower'">
-                    Borrower Name
+                    Full Name
                     <span ng-show="sortkey == 'Primary_Borrower' && !reverse" class="fa fa-caret-down"></span>
                     <span ng-show="sortkey == 'Primary_Borrower' && reverse" class="fa fa-caret-up"></span>
                 </a>
             </td>
             <td>
-                 <a>
-                    Borrowers Address
-                 </a>
+                <a href="#" ng-click="sortkey = 'AddressLine1'">
+                    Addreess
+                    <span ng-show="sortkey == 'AddressLine1' && !reverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortkey == 'AddressLine1' && reverse" class="fa fa-caret-up"></span>
+                </a>
             </td>
-            <td>
+            <td nowrap>
                 <a>
                     Borrowers Phone
                 </a>
             </td>
             <td>
-                <a href="#" ng-click="sortkey = 'LoanID'; reverse = !reverse">
-                    Stonegate Loan Number
-                    <span ng-show="sortkey == 'LoanID' && !reverse" class="fa fa-caret-down"></span>
-                    <span ng-show="sortkey == 'LoanID' && reverse" class="fa fa-caret-up"></span>
-                </a>
-            </td>
-            <td>
                 <a href="#" ng-click="sortkey = 'LoanCloseDate'; reverse = !reverse">
-                    Loan Close Date 
+                    LO Close Date
                     <span ng-show="sortkey == 'LoanCloseDate' && !reverse" class="fa fa-caret-down"></span>
                     <span ng-show="sortkey == 'LoanCloseDate' && reverse" class="fa fa-caret-up"></span>
                 </a>
             </td>
             <td>
-                <a>
+                <a href="#" ng-click="sortkey = 'Mortgage_Lender'">
                     Previous Mortgage Company
+                    <span ng-show="sortkey == 'Mortgage_Lender' && !reverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortkey == 'Mortgage_Lender' && reverse" class="fa fa-caret-up"></span>
                 </a>
             </td>
             <td>
                 <a href="#" ng-click="sortkey = 'eligible'; reverse = !reverse">
-                    Non Eligibility Reason
+                    Non Eligible Reason
                     <span ng-show="sortkey == 'eligible' && !reverse" class="fa fa-caret-down"></span>
                     <span ng-show="sortkey == 'eligible' && reverse" class="fa fa-caret-up"></span>
                 </a>
@@ -103,50 +109,64 @@
         </thead>
 
         <tbody>
-        <tr ng-repeat="client in clients | filter:{LastName:search}" ng-if="$index < 350">
-            <td>{{ client.LastName }}</td>
-            <td>{{ client.Primary_Borrower}}</td>
-            <td>{{ client.AddressLine1 }}</td>
-            <td>{{ client.HomePhoneNumber }}</td>
-            <td><a href="#" ng-click="ShowHide()" ng-model="getLoanId" ng-init="getLoanId = client.LoanID">{{client.LoanID}}</a></td>
-            <td>{{client.LoanCloseDate |date:'MM/dd/yyyy'}}</td>
-            <td>{{client.Mortgage_Lender}}</td>
-            <td><a ng-if="(client.Mortgage_Lender = client.Company)">Unacceptable prior company</a>
-                <a ng-if="(client.LoanCloseDate | date:'yyyy/dd/MM') < (sixMonthAgo | date: 'yyyy/dd/MM') && (client.Mortgage_Lender != client.Company)">Borrower Eligible</a>
-                <a ng-if="(client.LoanCloseDate | date:'yyyy/dd/MM') > (sixMonthAgo | date: 'yyyy/dd/MM')">Not 6 months past the loan origination date</a>
+        <tr ng-repeat="client in clients | filter:search" ng-if="$index < 25">
+            <td><a href ng-click="ShowHide()" ng-model="getLoanId" ng-init="getLoanId = client.LoanID">{{client.LoanID}}</a></td>
+            <td>{{client.LastName}}</td>
+            <td>{{client.Primary_Borrower}}</td>
+            <td><address nowrap>{{client.AddressLine1}}<br>{{client.City}}, {{client.State}} {{client.Zip}}</address></td>
+            <td>{{client.HomePhoneNumber}}</td>
+            <td nowrap>{{client.LoanCloseDate |date:'MM/dd/yyyy'}}</td>
+            <td nowrap>{{client.Mortgage_Lender}}</td>
+            <td nowrap><a ng-if="client.Mortgage_Lender == client.Company && (client.LoanCloseDate | date:'yyyy/dd/MM') > (sixMonthAgo | date: 'yyyy/dd/MM')">Unacceptable prior company<br></a>
+                <a ng-if="client.Mortgage_Lender == client.Company && (client.LoanCloseDate | date:'yyyy/dd/MM') < (sixMonthAgo | date: 'yyyy/dd/MM')">Unacceptable prior company</a>
+                <a ng-if="client.Mortgage_Lender != client.Company && (client.LoanCloseDate | date:'yyyy/dd/MM') < (sixMonthAgo | date: 'yyyy/dd/MM')">Borrower Eligible</a>
+                <!--<a ng-if="(client.LoanCloseDate | date:'yyyy/dd/MM') < (sixMonthAgo | date: 'yyyy/dd/MM') ">Borrower Eligible</a>-->
+                <a ng-if="(client.LoanCloseDate | date:'yyyy/dd/MM') > (sixMonthAgo | date: 'yyyy/dd/MM') && client.Mortgage_Lender != client.Company">Not 6 months past the loan origination date</a>
+                <a ng-if="(client.LoanCloseDate | date:'yyyy/dd/MM') > (sixMonthAgo | date: 'yyyy/dd/MM') && client.Mortgage_Lender == client.Company">Not 6 months past the loan origination date</a>           
             </td>
             <!--<td>{{sixMonthAgo | date: 'yyyy/dd/MM'}}</td>
             <td>{{client.Company}}</td>-->
         </tr>
         </tbody>
     </table>
-    
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
                 Client Loan Details
-             </h4>
+            </h4>
         </div>
-        <div ng-show ="IsVisible">
-            <div class="panel-body">
-                <tr ng-repeat="borrower in borrowers" ng-if="$index < 3">
-                    <td>{{ borrower.Primary_Borrower}}</td>
-                    <td>{{ borrower.AddressLine1 }}</td>
-                    <td>{{borrower.City}}Client CoBorrower Details will show here or other detailed information if available. {{borrower.State}} {{borrower.Zip}}</td>
-                    <td>{{ borrower.HomePhoneNumber }}</td>
-                    <td>{{client.LoanID}}</td>
-                    <td>{{client.LoanCloseDate}}</td>
-                 </tr>
-            </div>
-        </div>
+        <table id="clientdetails" ng-show="IsVisible" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <td>
+                        <a>Loan Number</a>
+                    </td>
+                    <td>
+                        <a>Co Borrower Full Name</a> 
+                    </td>
+                    <td>
+                        <a>Addreess</a>
+                    </td>
+                    <td>
+                        <a>Borrowers Phone</a>
+                    </td>
+                    <td>
+                        <a href="#">Link to Loan Information</a>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="borrower in borrowers" ng-if="$index < 3">
+                <td ng-bind="borrower.LoanID">{{borrower.LoanID}}</td>
+                <td>{{borrower.Primary_Borrower}}</td>
+                <td><address nowrap>{{borrower.AddressLine1}}<br>{{borrower.City}}, {{borrower.State}} {{borrower.Zip}}</address></td>
+                <td>{{borrower.HomePhoneNumber}}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-        <p class="text-center text-muted">
-            <a href="#" target="_blank">Refinance Eligibility Search</a>
-        </p>
-        <p class="text-center">
-            by <a href="https://tpo.stonegatemtg.com/" target="_blank">Stonegate Mtg Inc</a>
-        </p>
-
 </div>
 </body>
+    <p class="text-center text-muted"><a href="#" target="_blank">Refinance Eligibility Search</a></p>
+    <p class="text-center">by <a href="https://tpo.stonegatemtg.com/" target="_blank">Stonegate Mtg Inc</a></p>
 </html>
